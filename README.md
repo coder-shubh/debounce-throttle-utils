@@ -20,7 +20,7 @@ You can install the package via npm or yarn:
 npm install debounce-throttle-utils
 ```
 
-### Example:
+#### Example:
 
 ```ts
 //Debounce:
@@ -53,3 +53,31 @@ const throttledScroll = throttle(handleScroll, 1000);
 // Attach the throttled scroll event listener
 window.addEventListener("scroll", throttledScroll);
 ```
+
+##### Use Cases:
+
+```js
+1. 'React (Web)/React-native':
+
+import { debounce, throttle } from 'debounce-throttle-utils';
+
+// Debounced search function with a 500ms delay
+const search = debounce((query: string) => console.log('Searching for:', query), 500);
+
+// Throttled scroll function that can only be triggered once every 1000ms
+const handleScroll = throttle(() => console.log('Scrolling...'), 1000);
+
+
+3. 'Node.js / Backend':
+
+You can also use the debounce and throttle functions in Node.js or backend services to limit the rate of requests or actions.
+
+Debounce: Used to delay the execution of background tasks until the user stops interacting for a specified amount of time.
+Throttle: Controls the rate at which a function is called, such as limiting the number of requests to an API.
+
+```
+
+###### Summary:
+
+- This `README.md` now includes installation instructions, examples for **debounce** and **throttle** functions, and detailed explanations of how the library can be used in different environments (React, React Native, Node.js, Vanilla JS).
+- Copy-pasting this file will work seamlessly for users who are interested in integrating the `debounce-throttle-utils` package into their projects.
