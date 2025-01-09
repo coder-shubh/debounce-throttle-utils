@@ -17,7 +17,7 @@ You can install the package via npm or yarn:
 ### Using npm:
 
 ```bash
-npm install debounce-throttle-utils.
+npm install debounce-throttle-utils
 ```
 
 ### Example:
