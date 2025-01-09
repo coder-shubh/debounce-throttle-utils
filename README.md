@@ -68,7 +68,7 @@ const search = debounce((query: string) => console.log('Searching for:', query),
 const handleScroll = throttle(() => console.log('Scrolling...'), 1000);
 
 
-3. 'Node.js / Backend':
+**3. 'Node.js / Backend':**
 
 You can also use the debounce and throttle functions in Node.js or backend services to limit the rate of requests or actions.
 
