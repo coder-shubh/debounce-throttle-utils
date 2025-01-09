@@ -79,5 +79,5 @@ Throttle: Controls the rate at which a function is called, such as limiting the 
 
 ###### Summary:
 
-- This `README.md` now includes installation instructions, examples for **debounce** and **throttle** functions, and detailed explanations of how the library can be used in different environments (React, React Native, Node.js, Vanilla JS).
+- This `README.md` now includes installation instructions, examples for **debounce** and **throttle** functions, and detailed explanations of how the library can be used in different environments **(React, React Native, Node.js, Vanilla JS)**.
 - Copy-pasting this file will work seamlessly for users who are interested in integrating the `debounce-throttle-utils` package into their projects.
