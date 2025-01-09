@@ -10,6 +10,18 @@
 - **Debounce**: Ideal for user input handling (e.g., text input, search fields).
 - **Throttle**: Useful for events that happen frequently (e.g., scrolling, resizing).
 
+<!-- Badges -->
+<p>
+  <img src="https://img.shields.io/npm/v/coder-shubh/debounce-throttle-utils" alt="npm version">
+  <!-- Add any other badges here -->
+</p>
+
+<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+  <!-- First GIF -->
+  <img src="https://raw.githubusercontent.com/coder-shubh/debounce-throttle-utils/src/video.gif" alt="Demo 1" width="45%" height='30%'>
+</div>
+
+
 ## Installation
 
 You can install the package via npm or yarn:
