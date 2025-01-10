@@ -1,6 +1,6 @@
 {
   "name": "debounce-throttle-utils",
-  "version": "2.0.2",
+  "version": "2.0.6",
   "description": "A lightweight utility library that provides debounce and throttle functions to optimize performance by controlling the execution frequency of functions.",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -16,6 +16,7 @@
     "throttle",
     "performance",
     "utils",
+    "utility",
     "javascript",
     "typescript",
     "coder-shubh",
@@ -23,7 +24,7 @@
     "ios",
     "react-native",
     "react",
-    "react.js",
+    "reactjs",
     "node",
     "nodejs"
   ],
