@@ -45,93 +45,254 @@ npm install debounce-throttle-utils
 ```ts
 // === Example in React Functional Component ===
 import React, { useState } from "react";
-import { debounce, throttle } from "debounce-throttle-utils"; // Assuming you're using a library like "debounce-throttle-utils"
+import { debounce, throttle } from "debounce-throttle-utils"; // Import the debounce and throttle functions
 
-const App = () => {
-  const [query, setQuery] = useState("");
-  const [throttleText, setThrottleText] = useState("");
+const ThrottlingExample = () => {
+  const [scrollCount, setScrollCount] = useState(0); // State for scroll count
+  const [debouncedText, setDebouncedText] = useState(""); // State for debounced text input
+  const [isDebouncedTextCleared, setIsDebouncedTextCleared] = useState(false); // State for clearing text
 
-  // Debounced function for search
-  const debouncedSearch = debounce(
-    (query: string) => {
-      console.log("Debounced Searching for:", query);
+  // Handle the search text input with debounce
+  const handleSearch = (query) => {
+    setDebouncedText(query); // Update the text after debounce delay
+  };
+
+  // Throttled function to limit scroll event handler calls
+  const handleScroll = throttle(
+    () => {
+      setScrollCount((prevCount) => prevCount + 1); // Increment scroll count
+      console.log("Scroll event triggered");
     },
-    500,
-    { leading: true, trailing: true }
-  );
+    1000,
+    { leading: true, trailing: false }
+  ); // Throttling to fire the function at most once every 1000ms (1 second), leading execution only
 
-  // Throttled function for search (only called once every 500ms)
-  const throttledSearch = throttle((query: string) => {
-    console.log("Throttled Searching for:", query);
-  }, 500);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-    debouncedSearch(event.target.value); // Debounced search call
-    throttledSearch(event.target.value); // Throttled search call
+  // Reset the debounced text (showing cancellation in action)
+  const handleCancelDebounce = () => {
+    debounce.cancel(); // Cancel the debounced function immediately
+    setDebouncedText(""); // Reset the text display
+    setIsDebouncedTextCleared(true);
   };
 
   return (
-    <div>
+    <div style={styles.container}>
+      <h2>Debounce Example</h2>
+
+      {/* TextInput with debounce on text change */}
       <input
         type="text"
-        value={query}
-        onChange={handleInputChange}
-        placeholder="Search for something..."
+        placeholder="Type to search"
+        style={styles.input}
+        onChange={(e) =>
+          debounce(handleSearch, 500, { leading: false, trailing: true })(
+            e.target.value
+          )
+        } // Debounced search function with 500ms delay
       />
-      <div>
-        <p>Debounced Search Query: {query}</p>
-        <p>Throttled Search Query: {throttleText}</p>
+      <p>Debounced Text: {debouncedText}</p>
+      {isDebouncedTextCleared && <p>Debounced text cleared.</p>}
+
+      <h3>Throttling Scroll Example</h3>
+
+      {/* Scrollable area with throttled scroll handling */}
+      <div
+        style={styles.scrollArea}
+        onScroll={handleScroll} // Attach throttled handler to onScroll
+      >
+        <p style={styles.scrollText}>
+          Scroll down to trigger throttle. Scroll multiple times quickly to see
+          throttling in action.
+        </p>
+        <p style={styles.scrollText}>Scroll Count: {scrollCount}</p>
       </div>
+
+      {/* Button to cancel the debounce */}
+      <button onClick={handleCancelDebounce} style={styles.button}>
+        Cancel Debounced Search
+      </button>
+
+      {/* Reset button to clear scroll count */}
+      <button onClick={() => setScrollCount(0)} style={styles.button}>
+        Reset Scroll Count
+      </button>
     </div>
   );
 };
 
-export default App;
+// Styles for the component (CSS in JS)
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+    fontFamily: "Arial, sans-serif",
+  },
+  input: {
+    width: "90%",
+    padding: "10px",
+    marginBottom: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+  },
+  scrollArea: {
+    height: "300px",
+    width: "80%",
+    border: "1px solid #ccc",
+    overflowY: "scroll",
+    padding: "10px",
+  },
+  scrollText: {
+    fontSize: "18px",
+    margin: "10px 0",
+  },
+  button: {
+    padding: "10px 20px",
+    margin: "10px",
+    fontSize: "16px",
+    cursor: "pointer",
+    backgroundColor: "#007BFF",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+  },
+};
+
+export default ThrottlingExample;
 
 // === Example in React Native ===
 
 import React, { useState } from "react";
-import { View, TextInput, Text } from "react-native";
-import { debounce, throttle } from "debounce-throttle-utils"; // Assuming you're using a library like "debounce-throttle-utils"
+import {
+  View,
+  ScrollView,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  SafeAreaView,
+} from "react-native";
+import { debounce, throttle } from "debounce-throttle-utils"; // Import the debounce and throttle functions
 
 const App = () => {
-  const [query, setQuery] = useState("");
-  const [throttleText, setThrottleText] = useState("");
+  // State to store the number of scroll events fired
+  const [scrollCount, setScrollCount] = useState(0);
+  const [debouncedText, setDebouncedText] = useState("");
+  const [isDebouncedTextCleared, setIsDebouncedTextCleared] = useState(false);
 
-  // Debounced function for search
-  const debouncedSearch = debounce(
-    (query: string) => {
-      console.log("Debounced Searching for:", query);
+  // Handle the search text input with debounce
+  const handleSearch = (query: string) => {
+    setDebouncedText(query); // Update the text after the debounce delay
+  };
+
+  // Throttled function to limit the scroll event handler calls
+  const handleScroll = throttle(
+    () => {
+      setScrollCount((prevCount) => prevCount + 1); // Increment scroll count
+      console.log("Scroll event triggered");
     },
-    500,
-    { leading: true, trailing: true }
-  );
+    1000,
+    { leading: true, trailing: false }
+  ); // Throttling to fire the function at most once every 1000ms (1 second), leading execution only
 
-  // Throttled function for search (only called once every 500ms)
-  const throttledSearch = throttle((query: string) => {
-    console.log("Throttled Searching for:", query);
-  }, 500);
-
-  const handleInputChange = (text: string) => {
-    setQuery(text);
-    debouncedSearch(text); // Debounced search call
-    throttledSearch(text); // Throttled search call
+  // Reset the debounced text (showing cancellation in action)
+  const handleCancelDebounce = () => {
+    debounce.cancel(); // Cancel the debounced function immediately
+    setDebouncedText(""); // Reset the text display
+    setIsDebouncedTextCleared(true);
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.headerText}>Debounce Example</Text>
+
+      {/* TextInput with debounce on text change */}
       <TextInput
-        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-        placeholder="Search for something..."
-        value={query}
-        onChangeText={handleInputChange}
+        placeholder="Type to search"
+        style={styles.input}
+        onChangeText={debounce(handleSearch, 500, {
+          trailing: true,
+          leading: false,
+        })} // Debounced search function with 500ms delay and trailing execution
       />
-      <Text>Debounced Search: {query}</Text>
-      <Text>Throttled Search: {throttleText}</Text>
-    </View>
+      <Text style={styles.text}>Debounced Text: {debouncedText}</Text>
+      {isDebouncedTextCleared && (
+        <Text style={styles.text}>Debounced text cleared.</Text>
+      )}
+
+      <Text style={styles.title}>Throttling Scroll Example</Text>
+
+      {/* ScrollView with throttled scroll handling */}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        onScroll={handleScroll} // Attach throttled handler to onScroll
+        scrollEventThrottle={16} // Ensure smooth scrolling while throttling events
+      >
+        <Text style={styles.scrollText}>
+          Scroll down to trigger throttle. Scroll multiple times quickly to see
+          throttling in action.
+        </Text>
+        <Text style={styles.scrollText}>Scroll Count: {scrollCount}</Text>
+      </ScrollView>
+
+      {/* Button to cancel the debounce */}
+      <Button
+        title="Cancel Debounced Search"
+        onPress={handleCancelDebounce} // Trigger cancellation of debounce
+      />
+
+      {/* Reset button to clear scroll count */}
+      <Button
+        title="Reset Scroll Count"
+        onPress={() => setScrollCount(0)} // Reset scroll count
+      />
+    </SafeAreaView>
   );
 };
+
+// Styles for the component
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  headerText: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  input: {
+    width: "90%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    marginBottom: 20,
+    padding: 10,
+    borderRadius: 5,
+  },
+  text: {
+    fontSize: 16,
+    marginTop: 10,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  scrollView: {
+    height: 300,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  scrollContent: {
+    paddingVertical: 20,
+  },
+  scrollText: {
+    fontSize: 18,
+    padding: 10,
+  },
+});
 
 export default App;
 ```
