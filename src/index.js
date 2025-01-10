@@ -41,7 +41,7 @@ function debounce(func, delay, options = {}) {
  * @param func The function to throttle
  * @param limit The time interval in milliseconds to limit the execution of the function
  * @param options The options for leading/trailing execution
- * @returns A throttled function
+ * @returns A throttled function with flush method
  */
 function throttle(func, limit, options = {}) {
     let lastFunc;
