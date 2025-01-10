@@ -10,11 +10,26 @@
 - **Debounce**: Ideal for user input handling (e.g., text input, search fields).
 - **Throttle**: Useful for events that happen frequently (e.g., scrolling, resizing).
 
+<!-- Badges -->
+<p style="align:center;">
+  <img src="https://img.shields.io/npm/v/debounce-throttle-utils" alt="npm version">
+</p>
+
+
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
   <!-- First GIF -->
   <img src="https://github.com/coder-shubh/debounce-throttle-utils/blob/297b19962148e81f14648501084aec86d6779a60/src/video.gif?raw=true" alt="Demo 1" width="45%" height='30%'>
 </div>
 
+<!-- Table of Contents -->
+<h2>Table of Contents</h2>
+
+- [Installation](#installation)
+- [Features](#Features)
+- [Usage](#UseCases)
+- [Example](#Example)
+- [License](#license)
+- [Summary](#Summary)
 
 ## Installation
 
@@ -26,7 +41,7 @@ You can install the package via npm or yarn:
 npm install debounce-throttle-utils
 ```
 
-#### Example:
+### Example:
 
 ```ts
 //Debounce:
@@ -60,7 +75,7 @@ const throttledScroll = throttle(handleScroll, 1000);
 window.addEventListener("scroll", throttledScroll);
 ```
 
-##### Use Cases:
+### UseCases:
 
 ```js
 1. 'React (Web)/React-native':
@@ -83,7 +98,11 @@ Throttle: Controls the rate at which a function is called, such as limiting the 
 
 ```
 
-###### Summary:
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Summary:
 
 - This `README.md` now includes installation instructions, examples for **debounce** and **throttle** functions, and detailed explanations of how the library can be used in different environments **(React, React Native, Node.js, Vanilla JS)**.
 - Copy-pasting this file will work seamlessly for users who are interested in integrating the `debounce-throttle-utils` package into their projects.
